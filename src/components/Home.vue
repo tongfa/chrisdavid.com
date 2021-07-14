@@ -1,9 +1,6 @@
 <template>
   <div class="home">
     <h2>Father, Musician, Camper, Bicycler, Traveller, Maker</h2>
-    <div>
-      <a href="">Walk in the Valley (game)</a>
-    </div>
     <div class="social-list">
         <a href="https://www.facebook.com/ivorysharps" target="_blank">
           <img alt="facebook icon" src="../assets/fb-icon.svg" style="background-color:#FFF;">
