@@ -1,23 +1,19 @@
 <template>
-  <div class="main-logo">
-    <img alt="Trimax logo" src="./assets/logo.png">
+  <div>
+    <div class="main-logo">
+      <img alt="mountain panorama picture" src="./assets/panorama.png">
+    </div>
+    <Home/>
   </div>
-  <Home/>
-  <Services/>
-  <Contact/>
 </template>
 
 <script>
 import Home from './components/Home.vue'
-import Services from './components/Services.vue'
-import Contact from './components/Contact.vue'
 
 export default {
   name: 'App',
   components: {
     Home,
-    Services,
-    Contact,
   }
 }
 
@@ -32,8 +28,8 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #CCB;
-  background-color: #000;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
@@ -46,12 +42,12 @@ export default {
 }
 
 #app .main-logo img {
-  width: 400px;
+  max-width: 1024px;
 }
 
 @media screen and (max-width: 991px) {
   #app .main-logo img {
-    width: 40vw;
+    width: 100vw;
   }
 }
 
@@ -62,13 +58,14 @@ export default {
 }
 
 html {
-  background-color: #999;
+  background-color: rgb(200, 222, 255);
   display: flex;
   justify-content: center;
 }
 
 body {
   max-width: 1024px;
+  padding: 10px;
   margin: 0;
   flex: 1 0;
 }

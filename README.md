@@ -1,4 +1,4 @@
-# trimax
+# chrisdavid.com
 
 ## Project setup
 ```
