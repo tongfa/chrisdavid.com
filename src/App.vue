@@ -1,10 +1,5 @@
 <template>
-  <div>
-    <div class="main-logo">
-      <img alt="mountain panorama picture" src="./assets/panorama.png">
-    </div>
-    <Home/>
-  </div>
+  <Home/>
 </template>
 
 <script>
@@ -14,7 +9,7 @@ export default {
   name: 'App',
   components: {
     Home,
-  }
+  },
 }
 
 /*
@@ -24,8 +19,9 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Source Code Pro', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: rgb(0, 0, 0);
@@ -35,20 +31,8 @@ export default {
   align-items: stretch;
 }
 
-
-#app .main-logo {
-  display: flex;
-  justify-content: center;
-}
-
-#app .main-logo img {
-  max-width: 1024px;
-}
-
 @media screen and (max-width: 991px) {
-  #app .main-logo img {
-    width: 100vw;
-  }
+
 }
 
 @media screen and (max-width: 667px) {
@@ -58,15 +42,20 @@ export default {
 }
 
 html {
-  background-color: rgb(200, 222, 255);
   display: flex;
   justify-content: center;
+ -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {
-  max-width: 1024px;
-  padding: 10px;
   margin: 0;
   flex: 1 0;
 }
+
+
 </style>
