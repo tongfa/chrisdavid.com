@@ -3,7 +3,7 @@
     <div id="header-image" class="main-logo">
       <img
         alt="mountain panorama picture"
-        src="../assets/panorama2.jpg"
+        src="../assets/mountain.jpg"
         :style="imageStyle"
         >
     </div>
@@ -11,7 +11,7 @@
       id="header-message"
       :style="headerStyle"
       >
-      <h2>Father, Musician, Camper, Bicycler, Traveller, Maker</h2>
+      <h2>Father, Musician, Skier, Mountain Biker</h2>
     </div>
     <div
       class="content"
