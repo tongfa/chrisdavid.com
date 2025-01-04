@@ -11,7 +11,7 @@
       id="header-message"
       :style="headerStyle"
       >
-      <h2>Father, Musician, Skier, Mountain Biker</h2>
+      <h2>Father, Musician, Skier, Mountain Biker, Coder</h2>
     </div>
     <div
       class="content"

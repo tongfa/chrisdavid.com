@@ -11,7 +11,8 @@
     "core-js": "^3.6.5",
     "pagedown": "^1.1.0",
     "ress": "^4.0.0",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vue-js-modal": "^2.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -36,7 +37,9 @@
     },
     "rules": {}
   },
-  "eslintIgnore": [".#*"],
+  "eslintIgnore": [
+    ".#*"
+  ],
   "browserslist": [
     "> 1%",
     "last 2 versions",
