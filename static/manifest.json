@@ -1,0 +1,24 @@
+[
+    {
+        "title": "Skiing 2024 Dec 26",
+        "thumbnail_path": "videos/Skiing 2024 Dec 26 thumb.png",
+        "thumbnail_alt": "Thumbnail of skiier with arms out wide",
+        "media_path": "videos/Skiing Dec 26 2024.mp4",
+        "captions_path": "captions/Skiing Dec 26 2024.vtt",
+        "sort": "2024-12-16"
+    },
+    {
+        "title": "Creative Bridges - Oh Christmas Tree Dec 2023",
+        "thumbnail_path": "music/2023_11_19_CB_OhChristmasTree.jpg",
+        "thumbnail_alt": "A penguin ornament on a christmas tree",
+        "media_path": "music/2023_11_19_CB_OhChristmasTree.mp3",
+        "sort": "2023-12-16"
+    },
+    {
+        "title": "My one and only linux kernel commit Oct 2007",
+        "thumbnail_path": "images/AI_penguin.jpg",
+        "thumbnail_alt": "A penguin walking towards with one eye facing the viewer",
+        "media_path": "blogs/linux-commit.md",
+        "sort": "2007-12-16"
+    }
+]

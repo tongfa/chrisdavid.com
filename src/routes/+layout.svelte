@@ -10,7 +10,7 @@
 
 <footer>
     <a href="https://www.facebook.com/ivorysharps" target="_blank">
-        <img alt="facebook icon" src="/social/fb-icon.svg" style="background-color:#FFF;">
+        <img alt="facebook icon" src="/social/fb-icon.svg">
     </a>
     <a href="https://www.linkedin.com/in/ivorysharps" target="_blank">
         <img alt="facebook icon" src="/social/linkedin-icon.svg">
@@ -64,7 +64,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       color: rgb(0, 0, 0);
-      background-color: rgb(255, 255, 255);
+      background-color: rgb(240, 240, 255);
       margin: 0;
       flex: 1 0;
     }
