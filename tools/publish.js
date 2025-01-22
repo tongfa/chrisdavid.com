@@ -1,4 +1,4 @@
-const { S3Client, PutObjectCommand, HeadObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client, PutObjectCommand, HeadObjectCommand, ListObjectsV2Command, GetObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
 const path = require("path");
 
@@ -32,9 +32,9 @@ async function fileExistsInS3(fileName) {
 }
 
 // Function to upload a file to S3
-async function uploadFile(filePath) {
+async function uploadFile(local_path, filePath) {
     try {
-        const fileName = path.relative("static", filePath);
+        const fileName = path.relative(local_path, filePath);
 
         // Check if the file already exists in S3
         const exists = await fileExistsInS3(fileName);
@@ -92,13 +92,98 @@ function getAllFiles(dirPath, arrayOfFiles) {
     return arrayOfFiles;
 }
 
-// Function to upload all files in the 'static' folder
-async function uploadAllFilesInStatic() {
-    const allFiles = getAllFiles("static");
+
+async function uploadAllFiles(local_path, location) {
+    const local_filename = path.join(local_path, location);
+    const allFiles = getAllFiles(local_filename);
     for (const file of allFiles) {
-        await uploadFile(file);
+        await uploadFile(local_path, file);
     }
 }
 
-// Example usage
-uploadAllFilesInStatic();
+
+// Function to list all files in the S3 bucket
+async function listAllFilesInBucket() {
+    try {
+        const listParams = {
+            Bucket: BUCKET_NAME,
+        };
+        const command = new ListObjectsV2Command(listParams);
+        const response = await s3Client.send(command);
+        return response.Contents.map(item => item.Key);
+    } catch (err) {
+        console.error("Error listing files in bucket:", err);
+        return [];
+    }
+}
+
+
+// Function to download a file from S3
+async function downloadFile(local_path, fileName) {
+    try {
+        const filePath = path.join(local_path, fileName);
+        if (fs.existsSync(filePath)) {
+            console.log(`File already exists locally: ${fileName}`);
+            return;
+        }
+
+        const downloadParams = {
+            Bucket: BUCKET_NAME,
+            Key: fileName,
+        };
+        const command = new GetObjectCommand(downloadParams);
+        const response = await s3Client.send(command);
+        const dir = path.dirname(filePath);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        const fileStream = fs.createWriteStream(filePath);
+        response.Body.pipe(fileStream);
+        console.log(`File downloaded successfully: ${fileName}`);
+    } catch (err) {
+        console.error("Error downloading file:", err);
+    }
+}
+
+
+// Function to download all files from the S3 bucket
+async function downloadAllFiles(local_path, locations) {
+    const allFiles = await listAllFilesInBucket();
+    for (const file of allFiles) {
+        console.log(file);
+        for (const location of locations) {
+            if (file.startsWith(location)) {
+                await downloadFile(local_path, file);
+            }
+        }
+    }
+}
+
+const { program } = require('commander');
+
+program
+  .name('publish')
+  .description('Publish files to an S3 bucket');
+
+const local_path = "static";
+const locations = [
+    'music',
+    'videos',
+]
+
+program
+    .command('push')
+    .action(() => {
+        locations.forEach((location) => {
+            uploadAllFiles(local_path, location);
+        });
+    });
+
+program
+    .command('pull')
+    .action(() => {
+
+        downloadAllFiles(local_path, locations);
+    });
+
+program.parse(process.argv);
