@@ -5,12 +5,17 @@
     import Modal from './Modal.svelte';  // Import the modal component
     import Blog from './Blog.svelte';  // Import the modal component
 
-    const production = true;
     let player; // Variable to hold the player instance
     let loading = true;
     let posts: Post[] = []
 
-    const mediaPath = (x: string) => production ? `https://d2lhdje1f798eq.cloudfront.net/${x}` : x;
+    const mediaPath = (manifest_path: string) => {
+        if (manifest_path.startsWith('videos/') || manifest_path.startsWith('music/')) {
+            return `https://d2lhdje1f798eq.cloudfront.net/${manifest_path}`;
+        } else {
+            return manifest_path;
+        }
+    }
 
     class Post {
         title: string;
@@ -30,16 +35,12 @@
             captions_path?: string
         ) {
             this.title = title;
-            this.thumbnail = thumbnail_path;
+            this.thumbnail = mediaPath(thumbnail_path);
             this.thumbnail_alt = thumbnail_alt;
-            if (media_path.startsWith('videos/') || media_path.startsWith('music/')) {
-                this.media = mediaPath(media_path);
-            } else {
-                this.media = media_path;
-            }
+            this.media = mediaPath(media_path);
             this.sort = sort;
             if (captions_path) {
-                this.captions = captions_path;
+                this.captions = mediaPath(captions_path);
             }
             if (media_path.startsWith('music/')) {
                 this.type = 'music';
