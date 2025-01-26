@@ -1,5 +1,8 @@
-<!-- Modal.svelte -->
 <script lang="ts">
+//
+// This started out as a modal, but isn't anymore in order to be more mobile centric.
+// TODO: Rename this to content display or something.
+//
     export let open = false; // Control modal visibility
     export let close: () => void; // Function to close the modal
 </script>
@@ -17,16 +20,16 @@
 
 <style>
     .modal-overlay {
-        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        margin: 0 auto;
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 1000; /* Ensure modal is on top */
+        max-width: 95vw;
     }
 
     .modal-overlay > div {

@@ -25,8 +25,16 @@
     });
 </script>
 
-{#if loading}
-    <p>Loading...</p>
-{:else}
-    <Markdown {carta} {value} />
-{/if}
+<div>
+    {#if loading}
+        <p>Loading...</p>
+    {:else}
+        <Markdown {carta} {value} />
+    {/if}
+</div>
+
+<style>
+    :global(.carta-viewer img) {
+        max-width: 90vw;
+    }
+</style>

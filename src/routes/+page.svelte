@@ -88,7 +88,8 @@
     const closeModal = () => selectedPost = null;
     const openModal = (post: Post) => selectedPost = post; // Set the selected post
 
-    const playerHeight = () => selectedPost?.type === 'music' ? 40 : 360;
+    const playerWidth = () => Math.min(640, window.innerWidth * 0.9);
+    const playerHeight = () => selectedPost?.type === 'music' ? 60 : playerWidth(); // a square player makes the controls big
 </script>
 <h2>Musician, Skier, Mountain Biker, Coder, Volunteer</h2>
 
@@ -102,7 +103,7 @@
         <Blog media={selectedPost?.media}></Blog>
         {/if}
         {#if ['video', 'music'].includes(selectedPost?.type ?? '')}
-        <video id="myVideo" width="640" height="{playerHeight()}" controls>
+        <video id="myVideo" width="{playerWidth()}" height="{playerHeight()}" controls>
             <track kind="captions" src={selectedPost?.captions} srclang="en" label="English" default/>
             <source src={selectedPost?.media} type="video/mp4">
             Your browser does not support the video tag.
@@ -111,6 +112,7 @@
     </div>
 </Modal>
 
+{#if !selectedPost}
 <div class="content-list">
     {#each posts as post}
         <a class="post" on:click|preventDefault={() => openModal(post)} href={post.media}>
@@ -119,6 +121,8 @@
         </a>
     {/each}
 </div>
+{/if}
+
 <style>
 h2 {
   text-align: center;

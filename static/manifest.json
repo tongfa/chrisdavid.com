@@ -29,6 +29,13 @@
         "sort": "2023-12-16"
     },
     {
+        "title": "Creative Bridges School of Music is a thing!",
+        "thumbnail_path": "images/Creative Bridges - SVCF Sanctuary.jpg",
+        "thumbnail_alt": "A church sanctuary with a piano, drumset, keyboards and amps",
+        "media_path": "blogs/founded-create-bridges.md",
+        "sort": "2023-09-15"
+    },
+    {
         "title": "My one and only linux kernel commit Oct 2007",
         "thumbnail_path": "images/AI_penguin.jpg",
         "thumbnail_alt": "A penguin walking towards with one eye facing the viewer",
