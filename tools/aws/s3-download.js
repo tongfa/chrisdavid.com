@@ -57,6 +57,7 @@ async function downloadAllFiles(config, local_path, locations) {
             }
         }
     }
+    console.log('File download complete');
 }
 
 module.exports = { downloadAllFiles };
