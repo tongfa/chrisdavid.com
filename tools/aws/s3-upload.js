@@ -81,29 +81,20 @@ function getAllFiles(dirPath, arrayOfFiles) {
     return arrayOfFiles;
 }
 
-async function uploadFileMultipart(config, localPrefix, filePath) {
+async function uploadFileMultipart(config, localFile, remoteKeyName) {
     const MIN_PART_SIZE = 5 * 1024 * 1024; // 5 MB
-    console.log(localPrefix, filePath);
-    const keyName = path.relative(localPrefix, filePath);
-
-    // Check if the file already exists in S3
-    const exists = await fileExistsInS3(config, keyName);
-    if (exists) {
-        console.log(`File already exists in S3: ${keyName}`);
-        return;
-    }
 
     try {
       // 1. Create Multipart Upload
       const createMultipartUploadCommand = new CreateMultipartUploadCommand({
         Bucket: config.bucketName,
-        Key: keyName,
+        Key: remoteKeyName,
       });
       const createMultipartUploadResult = await config.s3Client.send(createMultipartUploadCommand);
       const uploadId = createMultipartUploadResult.UploadId;
 
       // 2. Calculate Part Size and Chunk the File
-      const fileStats = fs.statSync(filePath);
+      const fileStats = fs.statSync(localFile);
       const totalBytes = fileStats.size;
       const parts = [];
 
@@ -115,11 +106,11 @@ async function uploadFileMultipart(config, localPrefix, filePath) {
         const end = Math.min(start + MIN_PART_SIZE - 1, totalBytes - 1);
         partBytes = end - start + 1;
 
-        const fileStream = fs.createReadStream(filePath, { start, end });
+        const fileStream = fs.createReadStream(localFile, { start, end });
 
         const uploadPartCommand = new UploadPartCommand({
           Bucket: config.bucketName,
-          Key: keyName,
+          Key: remoteKeyName,
           UploadId: uploadId,
           PartNumber: partNumber,
           Body: fileStream,
@@ -139,14 +130,14 @@ async function uploadFileMultipart(config, localPrefix, filePath) {
       // 3. Complete Multipart Upload
       const completeMultipartUploadCommand = new CompleteMultipartUploadCommand({
         Bucket: config.bucketName,
-        Key: keyName,
+        Key: remoteKeyName,
         UploadId: uploadId,
         MultipartUpload: { Parts: parts },
       });
 
       await config.s3Client.send(completeMultipartUploadCommand);
 
-      console.log(`File uploaded successfully to S3: s3://${config.bucketName}/${keyName}`);
+      console.log(`File uploaded successfully to S3: s3://${config.bucketName}/${remoteKeyName}`);
 
     } catch (error) {
       console.error("Error uploading file to S3:", error);
@@ -154,13 +145,31 @@ async function uploadFileMultipart(config, localPrefix, filePath) {
     }
   }
 
+async function uploadFile(config, localPrefix, file) {
+    const keyName = path.relative(localPrefix, file);
+    await uploadFileMultipart(config, file, keyName);
+}
+
 
 async function uploadAllFiles(config, localPrefix, location) {
     const local_keyName = path.join(localPrefix, location);
     const allFiles = getAllFiles(local_keyName);
     for (const file of allFiles) {
-        await uploadFileMultipart(config, localPrefix, file);
+
+        console.log(file);
+        const keyName = path.relative(localPrefix, file);
+
+        // Check if the file already exists in S3
+        const exists = await fileExistsInS3(config, keyName);
+
+
+        if (exists) {
+            console.log(`File already exists in S3: ${keyName}`);
+            continue;
+        }
+
+        await uploadFileMultipart(config, file, keyName);
     }
 }
 
-module.exports = { uploadAllFiles };
+module.exports = { uploadAllFiles, uploadFile };

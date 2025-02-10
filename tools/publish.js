@@ -1,6 +1,6 @@
 const { program } = require('commander');
 const { downloadAllFiles } = require('./aws/s3-download');
-const { uploadAllFiles } = require('./aws/s3-upload');
+const { uploadAllFiles, uploadFile } = require('./aws/s3-upload');
 const { readConfig } = require('./aws/config');
 
 const local_path = "static";
@@ -15,11 +15,16 @@ program
 
 program
     .command('push')
-    .action(() => {
+    .option('-f, --force <location>', 'Specify a location to push regardless of whether it exists on remote')
+    .action((options) => {
         config = readConfig();
-        locations.forEach((location) => {
-            uploadAllFiles(config, local_path, location);
-        });
+        if (options.force) {
+            uploadFile(config, local_path, options.force)
+        } else {
+            locations.forEach((location) => {
+                uploadAllFiles(config, local_path, location);
+            });
+        }
     });
 
 program
