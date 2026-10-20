@@ -21,6 +21,14 @@
 </footer>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+    :global(body) {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: stretch;
+    }
+
     header > img {
         max-width: 100vw;
     }
@@ -29,13 +37,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    @import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-    :global(body) {
-      display: flex;
-      flex-flow: column nowrap;
-      align-items: stretch;
     }
 
     @media screen and (max-width: 991px) {
